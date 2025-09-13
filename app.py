@@ -15,6 +15,9 @@ app = FastAPI()
 
 class Model_Input(BaseModel):
     #ph	rainfall	label	soil_type	water_presence
+    N : float
+    P : float
+    K : float
     temperature : float
     humidity : float
     ph : float
@@ -34,6 +37,9 @@ def crop_reccom(input_parameters : Model_Input) :
     input_data = input_parameters.json()
     input_dictionary = json.loads(input_data)
     
+    N = input_dictionary['N']
+    P = input_dictionary['P']
+    K = input_dictionary['K']
     temperature = input_dictionary['temperature']
     humidity = input_dictionary['humidity']
     ph = input_dictionary['ph']
@@ -46,7 +52,7 @@ def crop_reccom(input_parameters : Model_Input) :
     
     
     
-    input_list = [[temperature, humidity, ph, rainfall, soil_encoded, water_encoded]]
+    input_list = [[N, P, K, temperature, humidity, ph, rainfall, soil_encoded, water_encoded]]
     
     probabilities = recommendation_model.predict_proba(input_list)[0]
 
